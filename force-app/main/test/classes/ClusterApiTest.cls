@@ -1,0 +1,69 @@
+@isTest
+public with sharing class ClusterApiTest {
+    @TestSetup
+    static void createLeads(){
+        ClusterTestData.createLeads();
+    }    
+
+    @isTest
+    public static void testPredict() {
+        ClusterTestData.runKMeans();
+        User clusterUser = ClusterTestData.createClusterUser();
+        System.runAs(clusterUser) {
+            Test.startTest();
+            List<Lead> leads = [SELECT Id, Name, AnnualRevenue, NumberOfEmployees FROM Lead LIMIT 10];
+            List<ClusterJob__c> jobs = [SELECT Id FROM ClusterJob__c LIMIT 1];
+            Id jobId = jobs[0].Id;
+            Id recordId = leads[0].Id;
+
+            ClusterApi api = new ClusterApi();
+            api.setModelOrJobId(jobId);
+            ClusterPredictionResult predictionResult = api.predict(recordId, false);
+
+            System.assertEquals(true, predictionResult.getClusterIndex() >= 0, 'Incorrect prediction cluster index');
+            ClusterDataPoint dataPoint = api.getDataPoint(recordId);
+            System.assertEquals(recordId, dataPoint.getExternalId(), 'Incorrect data point id');
+            ClusterDataPoint dataPoint2 = api.convertToDataPoint(leads[0]);
+            System.assertEquals(dataPoint.getRecordName(), dataPoint2.getRecordName(), 'Incorrect data point name');
+            Double distance = api.calculateDistance(dataPoint.getValues(), dataPoint.getValues());
+            System.assertEquals(true, ClusterDataHelper.doublesEqual(distance, ClusterDataHelper.DOUBLE_ZERO), 'Incorrect distance');
+
+            dataPoint.externalId = '';
+            ClusterPredictionResult predictionResult2 = api.predict(dataPoint, false);
+            System.assertEquals(predictionResult.getClusterIndex(), predictionResult2.getClusterIndex(), 'Incorrect prediction for empty external id');
+
+            Test.stopTest();
+        }
+    }
+
+    @isTest
+    public static void testKNN() {
+        ClusterTestData.runKMeans();
+        User clusterUser = ClusterTestData.createClusterUser();
+        System.runAs(clusterUser) {
+            Test.startTest();
+            List<Lead> leads = [SELECT Id, Name, AnnualRevenue, NumberOfEmployees FROM Lead LIMIT 11];
+            List<ClusterJob__c> jobs = [SELECT Id FROM ClusterJob__c LIMIT 1];
+            Id jobId = jobs[0].Id;
+            Id recordId = leads[0].Id;
+
+            ClusterApi api = new ClusterApi();
+            api.setModelOrJobId(jobId);
+            List<ClusterDataPointNeighbor> neighbors = api.findNearestNeighbors(recordId, 5, false);
+
+            System.assertEquals(5, neighbors.size(), 'Incorrect nn size');
+            System.assertEquals(true, neighbors[1].distance >= neighbors[0].distance, 'Incorrect nn sorting');
+
+            neighbors = api.getNearestNeighborsFromDb(recordId, 5);
+            System.assertEquals(5, neighbors.size(), 'Incorrect nn size');
+
+            api.deleteNearestNeighborsFromDb(recordId);
+            neighbors = api.getNearestNeighborsFromDb(recordId, 5);
+            System.assertEquals(0, neighbors.size(), 'Incorrect nn size');
+
+            Test.stopTest();
+        }
+    }
+
+
+}
