@@ -140,7 +140,7 @@
             model.model.soql = component.get('v.soqlQuery');
             var parsedQuery;
             try {
-                parsedQuery = clustanSoqlParser.parseSoqlQuery(model.model.soql);
+                parsedQuery = clustiqSoqlParser.parseSoqlQuery(model.model.soql);
             }
             catch (e) {
                 return "Soql parser error: " + e.message;

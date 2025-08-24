@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 import getNearestNeighbors from '@salesforce/apex/ClusterPredictController.getNearestNeighbors';
 import pullNearestNeighbors from '@salesforce/apex/ClusterPredictController.pullNearestNeighbors';
 import search from '@salesforce/apex/ClusterPredictController.search';
-import clustanUtils from 'c/clustanUtils';
+import clustiqUtils from 'c/clustiqUtils';
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class ClusterNearestNeighbors extends LightningElement {
@@ -149,11 +149,11 @@ export default class ClusterNearestNeighbors extends LightningElement {
 
     preprocessResults() {
         this.uiModel.jobState = JSON.parse(this.uiModel.jobState);
-        clustanUtils.decompressJobState(this.uiModel.jobState);
+        clustiqUtils.decompressJobState(this.uiModel.jobState);
         this.uiModel.nearestNeighbors.forEach(nn => {
             if (nn.neighborDataPoint && nn.neighborDataPoint.clusterIndex >=0) nn.clusterColor = this.uiModel.clusterColors[nn.neighborDataPoint.clusterIndex];
             nn.similarity = ((1.0 - nn.distance) * 100.0).toFixed(2) + '%';
-            clustanUtils.decompressDataPointValues(this.uiModel.jobState, nn.neighborDataPoint.values);
+            clustiqUtils.decompressDataPointValues(this.uiModel.jobState, nn.neighborDataPoint.values);
         });
     }
 

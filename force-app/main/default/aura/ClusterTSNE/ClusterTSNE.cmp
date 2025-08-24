@@ -2,7 +2,7 @@
     <ltng:require scripts="{!join(',', 
         $Resource.d3tsne + '/tsne.js',     
         $Resource.d3tsne + '/d3.v5.min.js',
-        $Resource.clustanUtils + '/clustanUtils.js')}" afterScriptsLoaded="{!c.onInit}"  />
+        $Resource.clustiqUtils + '/clustiqUtils.js')}" afterScriptsLoaded="{!c.onInit}"  />
     <aura:attribute name="initJobDetails" type="Boolean" access="global" default="true" />
     <aura:attribute name="width" type="Integer" access="global" default="500" />
     <aura:attribute name="height" type="Integer" access="global" default="500" />

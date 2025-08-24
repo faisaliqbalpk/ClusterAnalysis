@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import clustanUtils from 'c/clustanUtils';
+import clustiqUtils from 'c/clustiqUtils';
 
 export default class ClusterDataPointDetails extends NavigationMixin(LightningElement) {
     @api clusterDataPoint;
@@ -25,7 +25,7 @@ export default class ClusterDataPointDetails extends NavigationMixin(LightningEl
         let model = jobState.model;
         let dpValues = dataPoint.values;
         let objectValues = dpValues.map((cv,index) => { return { 
-            name: model.fields[index].displayLabel ? model.fields[index].displayLabel : model.fields[index].name, value: clustanUtils.convertDataPointValue(index, cv, jobState)
+            name: model.fields[index].displayLabel ? model.fields[index].displayLabel : model.fields[index].name, value: clustiqUtils.convertDataPointValue(index, cv, jobState)
         } });
         this.objectValues = objectValues;
         this.clusterColorCss = 'background-color: ' + this.clusterColor;

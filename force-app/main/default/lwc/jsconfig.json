@@ -3,8 +3,8 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
-            "c/clustanSoqlParser": [
-                "../staticresources/clustanSoqlParser/clustanSoqlParser.js"
+            "c/clustiqSoqlParser": [
+                "../staticresources/clustiqSoqlParser/clustiqSoqlParser.js"
             ]
         }
     },

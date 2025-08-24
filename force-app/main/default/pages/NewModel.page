@@ -16,8 +16,8 @@
                 window.location = '{!URLFOR($Action.ClusterModel__c.Tab, $ObjectType.ClusterModel__c)}';
             }
         };
-        $Lightning.use("clustan:ClusterModelBuilderApp", function () {
-            $Lightning.createComponent("clustan:ClusterModelBuilder", { recordId: recordId, vfCallBack: vfCallBack }, "LightningContainer", function (component) {
+        $Lightning.use("clustiq:ClusterModelBuilderApp", function () {
+            $Lightning.createComponent("clustiq:ClusterModelBuilder", { recordId: recordId, vfCallBack: vfCallBack }, "LightningContainer", function (component) {
                 console.log('Component created');
             });
         });

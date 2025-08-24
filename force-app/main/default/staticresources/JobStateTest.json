@@ -414,42 +414,42 @@
     "jobClusters":[
        {
           "attributes":{
-             "type":"clustan__ClusterJobCluster__c",
-             "url":"/services/data/v50.0/sobjects/clustan__ClusterJobCluster__c/a00P0000006SfHrIAK"
+             "type":"clustiq__ClusterJobCluster__c",
+             "url":"/services/data/v50.0/sobjects/clustiq__ClusterJobCluster__c/a00P0000006SfHrIAK"
           },
-          "clustan__ClusterJob__c":"a02P0000008CkzTIAS",
-          "clustan__ClusterNumber__c":"0",
-          "clustan__ClusterName__c":"Cluster 0",
+          "clustiq__ClusterJob__c":"a02P0000008CkzTIAS",
+          "clustiq__ClusterNumber__c":"0",
+          "clustiq__ClusterName__c":"Cluster 0",
           "Id":"a00P0000006SfHrIAK"
        },
        {
           "attributes":{
-             "type":"clustan__ClusterJobCluster__c",
-             "url":"/services/data/v50.0/sobjects/clustan__ClusterJobCluster__c/a00P0000006SfHsIAK"
+             "type":"clustiq__ClusterJobCluster__c",
+             "url":"/services/data/v50.0/sobjects/clustiq__ClusterJobCluster__c/a00P0000006SfHsIAK"
           },
-          "clustan__ClusterJob__c":"a02P0000008CkzTIAS",
-          "clustan__ClusterNumber__c":"1",
-          "clustan__ClusterName__c":"Cluster 1",
+          "clustiq__ClusterJob__c":"a02P0000008CkzTIAS",
+          "clustiq__ClusterNumber__c":"1",
+          "clustiq__ClusterName__c":"Cluster 1",
           "Id":"a00P0000006SfHsIAK"
        },
        {
           "attributes":{
-             "type":"clustan__ClusterJobCluster__c",
-             "url":"/services/data/v50.0/sobjects/clustan__ClusterJobCluster__c/a00P0000006SfHtIAK"
+             "type":"clustiq__ClusterJobCluster__c",
+             "url":"/services/data/v50.0/sobjects/clustiq__ClusterJobCluster__c/a00P0000006SfHtIAK"
           },
-          "clustan__ClusterJob__c":"a02P0000008CkzTIAS",
-          "clustan__ClusterNumber__c":"2",
-          "clustan__ClusterName__c":"Cluster 2",
+          "clustiq__ClusterJob__c":"a02P0000008CkzTIAS",
+          "clustiq__ClusterNumber__c":"2",
+          "clustiq__ClusterName__c":"Cluster 2",
           "Id":"a00P0000006SfHtIAK"
        },
        {
           "attributes":{
-             "type":"clustan__ClusterJobCluster__c",
-             "url":"/services/data/v50.0/sobjects/clustan__ClusterJobCluster__c/a00P0000006SfHuIAK"
+             "type":"clustiq__ClusterJobCluster__c",
+             "url":"/services/data/v50.0/sobjects/clustiq__ClusterJobCluster__c/a00P0000006SfHuIAK"
           },
-          "clustan__ClusterJob__c":"a02P0000008CkzTIAS",
-          "clustan__ClusterNumber__c":"3",
-          "clustan__ClusterName__c":"Cluster 3",
+          "clustiq__ClusterJob__c":"a02P0000008CkzTIAS",
+          "clustiq__ClusterNumber__c":"3",
+          "clustiq__ClusterName__c":"Cluster 3",
           "Id":"a00P0000006SfHuIAK"
        }
     ],
@@ -457,20 +457,20 @@
     "currentAlgorithmStep":5,
     "clusterJob":{
        "attributes":{
-          "type":"clustan__ClusterJob__c",
-          "url":"/services/data/v50.0/sobjects/clustan__ClusterJob__c/a02P0000008CkzTIAS"
+          "type":"clustiq__ClusterJob__c",
+          "url":"/services/data/v50.0/sobjects/clustiq__ClusterJob__c/a02P0000008CkzTIAS"
        },
-       "clustan__ClusterModel__c":"a04P0000005fIuMIAU",
-       "clustan__ObjectName__c":"Lead",
-       "clustan__NumberOfClusters__c":4,
-       "clustan__JobName__c":"Lead Long Text 10",
-       "clustan__JobStatus__c":"Completed",
-       "clustan__StartDate__c":"2020-10-25T18:36:35.819+0000",
+       "clustiq__ClusterModel__c":"a04P0000005fIuMIAU",
+       "clustiq__ObjectName__c":"Lead",
+       "clustiq__NumberOfClusters__c":4,
+       "clustiq__JobName__c":"Lead Long Text 10",
+       "clustiq__JobStatus__c":"Completed",
+       "clustiq__StartDate__c":"2020-10-25T18:36:35.819+0000",
        "Id":"a02P0000008CkzTIAS",
-       "clustan__InternalJobId__c":null,
-       "clustan__JobStatusText__c":"",
-       "clustan__Score__c":0.10391844789561333,
-       "clustan__EndDate__c":"2020-10-25T18:36:54.836+0000"
+       "clustiq__InternalJobId__c":null,
+       "clustiq__JobStatusText__c":"",
+       "clustiq__Score__c":0.10391844789561333,
+       "clustiq__EndDate__c":"2020-10-25T18:36:54.836+0000"
     },
     "sampleResultsIds":[
        "a01P0000009fcpBIAQ",

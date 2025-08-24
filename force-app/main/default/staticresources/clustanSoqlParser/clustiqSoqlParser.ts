@@ -1,6 +1,6 @@
 import { parseQuery, Query, isQueryValid } from 'soql-parser-js'; // TS / ES6 imports
 // var soqlParserJs = require('soql-parser-js'); // node's require format - usage: soqlParserJs.parseQuery()
-export class clustanSoqlParser {
+export class clustiqSoqlParser {
 	public parseSoqlQuery(soqlQuery:string) : Query {
 		return parseQuery(soqlQuery);
 	}
@@ -10,4 +10,4 @@ export class clustanSoqlParser {
 	}
 
 }
-(<any>window).clustanSoqlParser = new clustanSoqlParser();
+(<any>window).clustiqSoqlParser = new clustiqSoqlParser();

@@ -7,8 +7,8 @@
      
     <script type="text/javascript">
     //Create Lightning Component
-    $Lightning.use("clustan:ClusterJobRunnerApp", function() {
-        $Lightning.createComponent("clustan:ClusterJobDetails", { recordId: '{!ClusterJob__c.Id}'},"LightningContainer", function(component) {
+    $Lightning.use("clustiq:ClusterJobRunnerApp", function() {
+        $Lightning.createComponent("clustiq:ClusterJobDetails", { recordId: '{!ClusterJob__c.Id}'},"LightningContainer", function(component) {
             console.log('Component created');
         });
     });

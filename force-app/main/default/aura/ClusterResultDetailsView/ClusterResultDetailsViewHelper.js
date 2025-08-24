@@ -8,8 +8,8 @@
                 if (uiModel.jobStateString && uiModel.jobStateString !== '') {
                     uiModel.jobState = JSON.parse(uiModel.jobStateString);
                 }
-                clustanUtils.decompressJobState(uiModel.jobState);
-                clustanUtils.decompressDataPointValues(uiModel.jobState, uiModel.dataPoint.values);
+                clustiqUtils.decompressJobState(uiModel.jobState);
+                clustiqUtils.decompressDataPointValues(uiModel.jobState, uiModel.dataPoint.values);
                 component.set("v.jobResultDetails", uiModel);
                 let dpDetails = component.find('dataPointDetails');
                 dpDetails.set('v.dataPoint', uiModel.dataPoint);

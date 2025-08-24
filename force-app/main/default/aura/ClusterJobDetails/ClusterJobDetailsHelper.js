@@ -8,7 +8,7 @@
                 if (uiModel.jobStateString && uiModel.jobStateString !== '') {
                     uiModel.state = JSON.parse(uiModel.jobStateString);
                     if (uiModel.status == "Completed") {
-                        clustanUtils.decompressJobState(uiModel.state);
+                        clustiqUtils.decompressJobState(uiModel.state);
                     }
                 }
                 component.set("v.jobDetails", uiModel);

@@ -56,7 +56,7 @@ public with sharing class ClusterTestData {
     }
 
     public static void createLeads(){
-        List<sObject> leads = Test.loadData(Lead.sObjectType, 'ClustanLeadsMock');
+        List<sObject> leads = Test.loadData(Lead.sObjectType, 'ClustiqLeadsMock');
     }
 
     public static ClusterModelWrapper createModel(string modelJson) {

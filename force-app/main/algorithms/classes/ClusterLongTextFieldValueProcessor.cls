@@ -54,7 +54,7 @@ public with sharing class ClusterLongTextFieldValueProcessor implements ClusterF
             }
         }
         catch (System.TypeException ex) {            
-            //TODO: This is an ugly workaround for "System.TypeException: Invalid conversion from runtime type clustan.ClusterCompressedDoubleArray to Map<String,Integer>"
+            //TODO: This is an ugly workaround for "System.TypeException: Invalid conversion from runtime type clustiq.ClusterCompressedDoubleArray to Map<String,Integer>"
             //Because we replaced wordMap minMaxValue.maxValue with idf compressed array we can't get wordMap anymore
             //Previous wordMap is not needed to calculate tf and we are not going to recalculate idf in predict flow
             //So we just catch this exception and initialize word map from word list

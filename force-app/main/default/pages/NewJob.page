@@ -13,8 +13,8 @@
                 window.location.href = "/" + jobId;;
             }
         };
-        $Lightning.use("clustan:ClusterJobRunnerApp", function () {
-            $Lightning.createComponent("clustan:ClusterJobRunner", { vfCallBack: vfCallBack }, "LightningContainer", function (component) {
+        $Lightning.use("clustiq:ClusterJobRunnerApp", function () {
+            $Lightning.createComponent("clustiq:ClusterJobRunner", { vfCallBack: vfCallBack }, "LightningContainer", function (component) {
                 console.log('Component created');
             });
         });

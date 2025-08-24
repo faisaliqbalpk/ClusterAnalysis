@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Specifies apex class name of a custom record preprocessor. Class must implement clustan.ClusterRecordPreprocessor interface</value>
+        <value xsi:type="xsd:string">Specifies apex class name of a custom record preprocessor. Class must implement clustiq.ClusterRecordPreprocessor interface</value>
     </values>
     <values>
         <field>Value__c</field>

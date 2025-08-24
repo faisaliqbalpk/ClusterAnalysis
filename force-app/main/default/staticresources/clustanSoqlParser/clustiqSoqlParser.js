@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/clustanSoqlParser.ts");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/clustiqSoqlParser.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -36037,9 +36037,9 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./src/clustanSoqlParser.ts":
+/***/ "./src/clustiqSoqlParser.ts":
 /*!**********************************!*\
-  !*** ./src/clustanSoqlParser.ts ***!
+  !*** ./src/clustiqSoqlParser.ts ***!
   \**********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -36048,19 +36048,19 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // var soqlParserJs = require('soql-parser-js'); // node's require format - usage: soqlParserJs.parseQuery()
-    var clustanSoqlParser = /** @class */ (function () {
-        function clustanSoqlParser() {
+    var clustiqSoqlParser = /** @class */ (function () {
+        function clustiqSoqlParser() {
         }
-        clustanSoqlParser.prototype.parseSoqlQuery = function (soqlQuery) {
+        clustiqSoqlParser.prototype.parseSoqlQuery = function (soqlQuery) {
             return soql_parser_js_1.parseQuery(soqlQuery);
         };
-        clustanSoqlParser.prototype.isSoqlValid = function (soqlQuery) {
+        clustiqSoqlParser.prototype.isSoqlValid = function (soqlQuery) {
             return soql_parser_js_1.isQueryValid(soqlQuery);
         };
-        return clustanSoqlParser;
+        return clustiqSoqlParser;
     }());
-    exports.clustanSoqlParser = clustanSoqlParser;
-    window.clustanSoqlParser = new clustanSoqlParser();
+    exports.clustiqSoqlParser = clustiqSoqlParser;
+    window.clustiqSoqlParser = new clustiqSoqlParser();
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -36068,4 +36068,4 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /***/ })
 
 /******/ });
-//# sourceMappingURL=clustanSoqlParser.js.map
+//# sourceMappingURL=clustiqSoqlParser.js.map

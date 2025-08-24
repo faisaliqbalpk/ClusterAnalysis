@@ -298,7 +298,7 @@
     },
 
     gowerDistance: function (currentObject, centroid, jobState) {
-        return clustanUtils.gowerDistance(currentObject, centroid, jobState);
+        return clustiqUtils.gowerDistance(currentObject, centroid, jobState);
     },
 
     encodeHtml: function(rawStr) {
@@ -309,7 +309,7 @@
     },
 
     processDataPointValues: function(jobState, values) {
-        clustanUtils.decompressDataPointValues(jobState, values);
+        clustiqUtils.decompressDataPointValues(jobState, values);
     },
 
 })

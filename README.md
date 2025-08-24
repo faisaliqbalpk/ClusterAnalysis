@@ -24,7 +24,7 @@ sfdx force:org:push
 
 ### Create sample lead records
 ```
-sfdx force:data:bulk:upsert -f force-app/main/default/staticresources/ClustanLeadsMock.csv -s Lead -i Email
+sfdx force:data:bulk:upsert -f force-app/main/default/staticresources/ClustiqLeadsMock.csv -s Lead -i Email
 ```
 
 ### Run Apex tests

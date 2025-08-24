@@ -10,7 +10,7 @@
         Object.defineProperty(module.exports, '__esModule', { value: true });
     } else {
         // Browser globals (root is window)
-        root.clustanUtils = factory();
+        root.clustiqUtils = factory();
   }
 }(typeof self !== 'undefined' ? self : this, function () {
 

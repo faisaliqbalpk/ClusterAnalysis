@@ -169,7 +169,7 @@ public with sharing class ClusterConstants {
                 return emptySet;
             }
             ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterLanguage__mdt);
-            List<ClusterLanguage__mdt> languages = [SELECT DeveloperName, MasterLabel,clustan__StopWords__c FROM ClusterLanguage__mdt WHERE DeveloperName = :language];
+            List<ClusterLanguage__mdt> languages = [SELECT DeveloperName, MasterLabel,clustiq__StopWords__c FROM ClusterLanguage__mdt WHERE DeveloperName = :language];
             if (languages.size() > 0) {
                 stopWordSet = new Set<String>(languages.get(0).StopWords__c.split(','));
                 stopWords.put(language, stopWordSet);

@@ -54,7 +54,7 @@ public with sharing class ClusterSilhouetteScoreStep extends ClusterIterableBase
         ClusterKMeansJobState jobState = (ClusterKMeansJobState)this.runner.getJobState();
         ClusterDataPoint[] sampleDataPoints;
         if (jobState.dataPoints == null || jobState.dataPoints.size() == 0) {
-            //We have to load datapoints each time here as a workaround for "First error: Batchable instance is too big: clustan.ClusterSilhouetteScoreStep"
+            //We have to load datapoints each time here as a workaround for "First error: Batchable instance is too big: clustiq.ClusterSilhouetteScoreStep"
             //This happens if we store heavy long text data points in the jobState
             //Update: Apparently this is not helping so we cache data points in ClusterInitCentroidsStep
             //This condition is not called now

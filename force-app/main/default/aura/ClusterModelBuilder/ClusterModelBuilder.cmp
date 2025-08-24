@@ -12,7 +12,7 @@
     <aura:attribute name="timeoutId" type="Integer" access="private" default="0" />
     <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
     <aura:handler name="queryChangeEvent" event="c:QueryChangeEvent" includeFacets="true" action="{!c.queryChangeEventHandler}" />
-    <ltng:require scripts="{!$Resource.clustanSoqlParser + '/clustanSoqlParser.min.js'}" />
+    <ltng:require scripts="{!$Resource.clustiqSoqlParser + '/clustiqSoqlParser.min.js'}" />
     <div class="slds-scope cmb-fullheight">
         <lightning:notificationsLibrary aura:id="notifLib" />
         <lightning:navigation aura:id="navigation"/>

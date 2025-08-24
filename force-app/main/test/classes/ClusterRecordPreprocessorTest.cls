@@ -19,13 +19,13 @@ public inherited sharing class ClusterRecordPreprocessorTest {
     public class ClusterObjectFactoryMock extends ClusterObjectFactory {
         public override ClusterRecordPreprocessor createRecordPreprocessor() {
             String customPreprocessorApexClassName = ClusterConstants.getApexRecordPreprocessorClassName();
-            return this.createRecordPreprocessor('clustan.ClusterRecordPreprocessorTest.ClusterRecordPreprocessorImpl');
+            return this.createRecordPreprocessor('clustiq.ClusterRecordPreprocessorTest.ClusterRecordPreprocessorImpl');
         }
     }
 
     @TestSetup
     static void createLeads(){
-        List<sObject> leads = Test.loadData(Lead.sObjectType, 'ClustanLeadsMock');
+        List<sObject> leads = Test.loadData(Lead.sObjectType, 'ClustiqLeadsMock');
     }
 
     @isTest
