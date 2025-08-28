@@ -56,7 +56,7 @@ public with sharing class ClusterTestData {
     }
 
     public static void createLeads(){
-        List<sObject> leads = Test.loadData(Lead.sObjectType, 'ClustiqLeadsMock');
+        List<sObject> leads = Test.loadData(Lead.sObjectType, 'clustanLeadsMock');
     }
 
     public static ClusterModelWrapper createModel(string modelJson) {
@@ -151,7 +151,7 @@ public with sharing class ClusterTestData {
             System.assertEquals(state.model.fields.size(), state.minMaxValues.size(), 'MinMax values initialized incorrectly');
             System.debug('MinMax values: ' + state.minMaxValues);
             System.assertEquals(true, (Decimal)state.minMaxValues[0].maxValue > 0, 'MinMax value calculated incorrectly');
-            List<ClusterJobResult__c> results = [SELECT Id, Random__c, Json__c FROM ClusterJobResult__c WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
+            List<ClusterJobResult__b> results = [SELECT Id, Random__c, Json__c FROM ClusterJobResult__b WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
             System.assertEquals(true, results != null && results.size() > 0, 'Job results are not populated');
             System.assertEquals(true, results[0].Random__c >= 0, 'Incorrect random seed value');
             System.assertEquals(true, results[0].Json__c != null && results[0].Json__c != '', 'Json data is not populated');
@@ -178,10 +178,10 @@ public with sharing class ClusterTestData {
             Database.QueryLocator ql = dataAssignmentStep.start(null);
             // Get an iterator
             Database.QueryLocatorIterator it =  ql.iterator();
-            List<ClusterJobResult__c> resultScope = new List<ClusterJobResult__c>();
+            List<ClusterJobResult__b> resultScope = new List<ClusterJobResult__b>();
             while (it.hasNext())
             {
-                resultScope.add((ClusterJobResult__c)it.next());
+                resultScope.add((ClusterJobResult__b)it.next());
             }
             dataAssignmentStep.execute(null, resultScope);
             dataAssignmentStep.finish(null);
@@ -196,10 +196,10 @@ public with sharing class ClusterTestData {
             ql = centroidUpdateStep.start(null);
             // Get an iterator
             it = ql.iterator();
-            resultScope = new List<ClusterJobResult__c>();
+            resultScope = new List<ClusterJobResult__b>();
             while (it.hasNext())
             {
-                resultScope.add((ClusterJobResult__c)it.next());
+                resultScope.add((ClusterJobResult__b)it.next());
             }
             centroidUpdateStep.execute(null, resultScope);
             centroidUpdateStep.finish(null);
@@ -223,7 +223,7 @@ public with sharing class ClusterTestData {
             Boolean lastStep = runner.prepareNextStep();        
             System.assertEquals(true, lastStep, 'Last step not returned');
 
-            results = [SELECT Id, ClusterNumber__c, Cluster__c FROM ClusterJobResult__c WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
+            results = [SELECT Id, ClusterNumber__c, Cluster__c FROM ClusterJobResult__b WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
             System.assertEquals(true, results[0].ClusterNumber__c >= 0, 'Cluster result cluster number not saved');
             System.assertEquals(true, results[0].Cluster__c != null, 'Cluster result cluster id not saved');
             System.assertEquals(ClusterConstants.JOBSTATUS_COMPLETED, state.clusterJob.JobStatus__c, 'Incorrect job status on last step');
@@ -265,7 +265,7 @@ public with sharing class ClusterTestData {
         System.assertEquals(state.model.fields.size(), state.minMaxValues.size(), 'MinMax values initialized incorrectly');
         System.debug('MinMax values: ' + state.minMaxValues);
         System.assertEquals(true, (Decimal)state.minMaxValues[0].maxValue > 0, 'MinMax value calculated incorrectly');
-        List<ClusterJobResult__c> results = [SELECT Id, Random__c, Json__c FROM ClusterJobResult__c WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
+        List<ClusterJobResult__b> results = [SELECT Id, Random__c, Json__c FROM ClusterJobResult__b WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
         System.assertEquals(true, results != null && results.size() > 0, 'Job results are not populated');
         System.assertEquals(true, results[0].Random__c >= 0, 'Incorrect random seed value');
         System.assertEquals(true, results[0].Json__c != null && results[0].Json__c != '', 'Json data is not populated');
@@ -333,10 +333,10 @@ public with sharing class ClusterTestData {
         Database.QueryLocator ql = dataAssignmentStep.start(null);
         // Get an iterator
         Database.QueryLocatorIterator it =  ql.iterator();
-        List<ClusterJobResult__c> resultScope = new List<ClusterJobResult__c>();
+            List<ClusterJobResult__b> resultScope = new List<ClusterJobResult__b>();
         while (it.hasNext())
         {
-            resultScope.add((ClusterJobResult__c)it.next());
+                resultScope.add((ClusterJobResult__b)it.next());
         }
         dataAssignmentStep.execute(null, resultScope);
         dataAssignmentStep.done();
@@ -349,7 +349,7 @@ public with sharing class ClusterTestData {
         System.assertEquals(true, state.clusterJob.Score__c != null, 'Silhouette score calculated incorrectly');
 
         Boolean lastStep = runner.prepareNextStep();
-        results = [SELECT Id, ClusterNumber__c, Cluster__c FROM ClusterJobResult__c WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
+        results = [SELECT Id, ClusterNumber__c, Cluster__c FROM ClusterJobResult__b WHERE ClusterJob__c = :state.clusterJob.Id LIMIT 1];
         System.assertEquals(true, results[0].ClusterNumber__c >= 0, 'Cluster result cluster number not saved');
         System.assertEquals(true, results[0].Cluster__c != null, 'Cluster result cluster id not saved');
         System.assertEquals(currentStep, state.currentAlgorithmStep, 'Incorrect next step after silhouette score calculation');

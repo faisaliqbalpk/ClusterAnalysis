@@ -2,7 +2,7 @@
 public with sharing class ClusterUiControllerTest {
     @TestSetup
     static void createLeads(){
-        List<sObject> leads = Test.loadData(Lead.sObjectType, 'ClustiqLeadsMock');
+        List<sObject> leads = Test.loadData(Lead.sObjectType, 'clustanLeadsMock');
     }
 
     @isTest 

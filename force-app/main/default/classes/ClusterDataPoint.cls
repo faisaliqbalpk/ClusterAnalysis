@@ -1,5 +1,5 @@
 /*
- * Represents a data point - wrapper for ClusterJobResult__c
+ * Represents a data point - wrapper for ClusterJobResult__b
  *
  * @author: Iskander Mukhamedgaliyev
  */
@@ -27,7 +27,7 @@ global with sharing class ClusterDataPoint {
 
     }
 
-    global ClusterDataPoint(ClusterJobResult__c resultRecord) {
+    global ClusterDataPoint(ClusterJobResult__b resultRecord) {
         this.recordId = resultRecord.Id;
         this.externalId = resultRecord.RecordId__c;
         this.clusterIndex = Integer.valueOf(resultRecord.ClusterNumber__c);

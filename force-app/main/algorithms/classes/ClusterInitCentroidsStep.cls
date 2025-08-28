@@ -40,9 +40,9 @@ public with sharing class ClusterInitCentroidsStep extends ClusterIterableBase {
         log.debug('Retrieving random records from db');
         ClusterKMeansJobState jobState = (ClusterKMeansJobState)this.runner.getJobState();
         Integer count = Math.min(ClusterConstants.getSampleRecordSize(jobState.model), jobState.numRecords);
-        ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__c);
+        ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__b);
         //isAccessible permission is checked in ClusterAccessCheck.checkReadPermission, exception is thrown in case of no access
-        List<ClusterJobResult__c> randomRecords = [SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id ORDER BY Random__c LIMIT :count];
+        List<ClusterJobResult__b> randomRecords = [SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id ORDER BY Random__c LIMIT :count];
         ClusterModelWrapper model = jobState.model;
 
         log.debug('Initializing ' + randomRecords.size() + ' sample records');
@@ -53,7 +53,7 @@ public with sharing class ClusterInitCentroidsStep extends ClusterIterableBase {
         for (SObject record:randomRecords)
         {
             jobState.sampleResultsIds.add(record.Id);
-            ClusterDataPoint dp = this.createDataPoint((ClusterJobResult__c)record, objectProcessor);
+            ClusterDataPoint dp = this.createDataPoint((ClusterJobResult__b)record, objectProcessor);
             jobState.dataPoints.add(dp);
             dp.index = index;
             if (this.cacheRecords) {
@@ -113,7 +113,7 @@ public with sharing class ClusterInitCentroidsStep extends ClusterIterableBase {
 
     }
 
-    private ClusterDataPoint createDataPoint(ClusterJobResult__c resultRecord, ClusterSObjectProcessor objectProcessor) {
+    private ClusterDataPoint createDataPoint(ClusterJobResult__b resultRecord, ClusterSObjectProcessor objectProcessor) {
         ClusterDataPoint dp = new ClusterDataPoint();
         dp.recordId = resultRecord.Id;
         dp.externalId = resultRecord.RecordId__c;

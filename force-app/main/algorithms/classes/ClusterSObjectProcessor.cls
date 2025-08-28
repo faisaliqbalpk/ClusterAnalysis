@@ -52,7 +52,7 @@ public with sharing class ClusterSObjectProcessor {
         }
     }
 
-    public ClusterDataPoint createDataPointFromResult(ClusterJobResult__c resultRecord) {
+    public ClusterDataPoint createDataPointFromResult(ClusterJobResult__b resultRecord) {
         ClusterDataPoint dp = new ClusterDataPoint(resultRecord);
         dp.values = (Object[])this.parseValuesFromJson(ClusterDataHelper.getClusterJobResultValues(resultRecord));
         return dp;

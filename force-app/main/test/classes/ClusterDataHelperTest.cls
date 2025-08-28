@@ -33,7 +33,7 @@ public with sharing class ClusterDataHelperTest {
 
     @isTest
     public static void testClusterJobResultJsonValues() {
-        ClusterJobResult__c result = new ClusterJobResult__c();
+        ClusterJobResult__b result = new ClusterJobResult__b();
         Integer[] values = new Integer[100];
         for (Integer i=0; i<values.size(); i++) {
             values[i] = i;

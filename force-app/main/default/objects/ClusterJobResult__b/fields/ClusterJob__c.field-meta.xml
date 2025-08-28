@@ -7,9 +7,7 @@
     <referenceTo>ClusterJob__c</referenceTo>
     <relationshipLabel>Cluster Job Results</relationshipLabel>
     <relationshipName>ClusterJobResults</relationshipName>
-    <relationshipOrder>0</relationshipOrder>
-    <reparentableMasterDetail>true</reparentableMasterDetail>
+    <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>MasterDetail</type>
-    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    <type>Lookup</type>
 </CustomField>

@@ -34,7 +34,7 @@ global with sharing class ClusterDataPointNeighbor implements Comparable {
         jobNeighbor.RecordId__c = this.externalRecordId;
         jobNeighbor.ClusterJob__c = this.jobId;
         jobNeighbor.NeighborRecordId__c = this.neighborExternalRecordId;
-        jobNeighbor.ClusterJobResult__c = this.neighborDataPoint.recordId;
+        jobNeighbor.ClusterJobResult__b = this.neighborDataPoint.recordId;
     }
 
     /**

@@ -105,8 +105,8 @@ public abstract with sharing class ClusterAlgorithmRunner {
         try {
             ClusterJobState state = this.getJobState();
             log.debug('Starting algorithm: ' + state.model.algorithm);
-            //We will CRUD permissions on ClusterJobResult__c once here and will not check check them in every step
-            ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__c);
+            //We will CRUD permissions on ClusterJobResult__b once here and will not check check them in every step
+            ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__b);
             state.clusterJob = ClusterJobManager.createJob(state.model.name, state.model);
             state.jobClusters = ClusterJobManager.createJobClusters(state.clusterJob);
             state.totalIterationsCount = 0;

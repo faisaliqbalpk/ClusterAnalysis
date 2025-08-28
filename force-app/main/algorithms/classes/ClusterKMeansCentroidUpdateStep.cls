@@ -42,10 +42,10 @@ public with sharing class ClusterKMeansCentroidUpdateStep extends ClusterBatchBa
     
     protected override Database.QueryLocator getBatchQueryLocator() {
         ClusterKMeansJobState jobState = (ClusterKMeansJobState)runner.getJobState();
-        //CRUD permissions on ClusterJobResult__c are checked in ClusterAccessCheck.checkCRUDPermission in ClusterAlgorithmRunner.start which is calling all ClusterAlgorithmStep implementors
+        //CRUD permissions on ClusterJobResult__b are checked in ClusterAccessCheck.checkCRUDPermission in ClusterAlgorithmRunner.start which is calling all ClusterAlgorithmStep implementors
         //exception is thrown there in case of no access
         return Database.getQueryLocator([SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c,DistanceToCluster__c, DistanceToNNCluster__c 
-            FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id]);
+            FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id]);
     }
 
     public override void processRecords(Database.BatchableContext bc, List<SObject> scope) {        
@@ -57,7 +57,7 @@ public with sharing class ClusterKMeansCentroidUpdateStep extends ClusterBatchBa
         ClusterSObjectProcessor objectProcessor = this.runner.getSObjectProcessor();
         List<ClusterDataPoint> centroids = jobState.centroids;
         for (Integer sindex = 0; sindex < scopeSize; sindex++){
-            ClusterJobResult__c currentRecord = (ClusterJobResult__c)scope[sindex];
+            ClusterJobResult__b currentRecord = (ClusterJobResult__b)scope[sindex];
             ClusterDataPoint currentDataPoint = objectProcessor.createDataPointFromResult(currentRecord);
             ClusterDataPoint currentCentroid = centroids[currentDataPoint.clusterIndex];
             //Calculating per cluster sum and count of all data point values

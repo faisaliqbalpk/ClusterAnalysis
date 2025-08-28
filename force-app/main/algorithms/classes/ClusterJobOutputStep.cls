@@ -52,13 +52,13 @@ public with sharing class ClusterJobOutputStep extends ClusterBatchBase implemen
             }
         }
         log.debug('Retrieving cluster job results for ' + ids.size() + ' records');
-        //CRUD permissions on ClusterJobResult__c are checked in ClusterAccessCheck.checkCRUDPermission in ClusterAlgorithmRunner.start which is calling all ClusterAlgorithmStep implementors
+        //CRUD permissions on ClusterJobResult__b are checked in ClusterAccessCheck.checkCRUDPermission in ClusterAlgorithmRunner.start which is calling all ClusterAlgorithmStep implementors
         //exception is thrown there in case of no access
         //Checking the same in every processRecords is redundant
-        List<ClusterJobResult__c> results = [SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id AND RecordId__c IN :ids LIMIT :scope.size()];
-        Map<String, ClusterJobResult__c> resultsMap = new Map<String, ClusterJobResult__c>();
+        List<ClusterJobResult__b> results = [SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id AND RecordId__c IN :ids LIMIT :scope.size()];
+        Map<String, ClusterJobResult__b> resultsMap = new Map<String, ClusterJobResult__b>();
         //Building map for faster lookup
-        for (ClusterJobResult__c result:results) {
+        for (ClusterJobResult__b result:results) {
             resultsMap.put(result.RecordId__c, result);
         }
         Map<Id, SObject> updateMap = new Map<Id, SObject>();
@@ -68,7 +68,7 @@ public with sharing class ClusterJobOutputStep extends ClusterBatchBase implemen
                 if (model.fields[i].distanceType == ClusterConstants.FIELDTYPE_OUTPUT) {
                     //Update only if field name starts with clusternumber
                     if (model.fields[i].name.toLowerCase().startsWith('clusternumber') || this.skipFieldNameCheck) {
-                        ClusterJobResult__c result = resultsMap.get(String.valueOf(record.get(idFieldName)));
+                        ClusterJobResult__b result = resultsMap.get(String.valueOf(record.get(idFieldName)));
                         if (result != null) {
                             Schema.DisplayType fieldType = this.outputFieldTypes.get(model.fields[i].name);
                             if (fieldType != null) {

@@ -23,11 +23,11 @@ public with sharing class ClusterSilhouetteScoreStep extends ClusterIterableBase
         this.totalSilhouetteScore = 0;
         ClusterKMeansJobState jobState = (ClusterKMeansJobState)this.runner.getJobState();
         this.sampleCount = Math.min(ClusterConstants.getSampleRecordSize(jobState.model), jobState.numRecords);
-        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__c);
+        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__b);
         //Populating updated cluster numbers into cached data points
         if (jobState.dataPoints != null && jobState.dataPoints.size() > 0 && jobState.dataPointsIdMap != null && jobState.dataPointsIdMap.size() > 0) {
-            List<ClusterJobResult__c> existingResults = [SELECT Id, ClusterNumber__c from ClusterJobResult__c WHERE Id IN :jobState.dataPointsIdMap.keySet()];
-            for (ClusterJobResult__c existingResult:existingResults) {
+            List<ClusterJobResult__b> existingResults = [SELECT Id, ClusterNumber__c from ClusterJobResult__b WHERE Id IN :jobState.dataPointsIdMap.keySet()];
+            for (ClusterJobResult__b existingResult:existingResults) {
                 Integer dpIndex = jobState.dataPointsIdMap.get(String.valueOf(existingResult.Id));
                 if (dpIndex != null && dpIndex < jobState.dataPoints.size()) {
                     jobState.dataPoints[dpIndex].clusterIndex = Integer.valueOf(existingResult.ClusterNumber__c);

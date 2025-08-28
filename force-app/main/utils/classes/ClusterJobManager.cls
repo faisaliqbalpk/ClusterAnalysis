@@ -179,13 +179,13 @@ public with sharing class ClusterJobManager {
         }
     }
 
-    public static void deleteNearestNeighborsFromResults(List<ClusterJobResult__c> jobResults) {
+    public static void deleteNearestNeighborsFromResults(List<ClusterJobResult__b> jobResults) {
         ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobNeighbor__c);
         List<Id> resultIds = new List<Id>();
-        for (ClusterJobResult__c jobResult:jobResults) {
+        for (ClusterJobResult__b jobResult:jobResults) {
             resultIds.add(jobResult.Id);
         }
-        List<ClusterJobNeighbor__c> jrNeighbors = [SELECT Id FROM ClusterJobNeighbor__c WHERE ClusterJobResult__c IN :resultIds];
+        List<ClusterJobNeighbor__c> jrNeighbors = [SELECT Id FROM ClusterJobNeighbor__c WHERE ClusterJobResult__b IN :resultIds];
         if (jrNeighbors.size() > 0) {            
             delete jrNeighbors;
         }

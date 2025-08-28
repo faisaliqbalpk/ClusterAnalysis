@@ -16,7 +16,7 @@ public with sharing class ClusterDeleteModelJobBatch implements Database.Batchab
         this.modelIdsToDelete = modelIdsToDelete;
         ClusterAccessCheck.checkCRUDPermission(Schema.sObjectType.ClusterJob__c);
         ClusterAccessCheck.checkCRUDPermission(Schema.sObjectType.ClusterJobCluster__c);
-        ClusterAccessCheck.checkCRUDPermission(Schema.sObjectType.ClusterJobResult__c);
+        ClusterAccessCheck.checkCRUDPermission(Schema.sObjectType.ClusterJobResult__b);
         ClusterAccessCheck.checkCRUDPermission(Schema.sObjectType.ClusterJobNeighbor__c);
         if (jobIdsToDelete == null || jobIdsToDelete.size() == 0) {
             ClusterAccessCheck.checkCRUDPermission(Schema.sObjectType.ClusterModel__c);
@@ -45,8 +45,8 @@ public with sharing class ClusterDeleteModelJobBatch implements Database.Batchab
 
     private Database.QueryLocator getBatchQueryLocator() {
         ClusterAccessCheck.checkCRUDPermission(Schema.sObjectType.ClusterJob__c);
-        ClusterAccessCheck.checkFLSReadPermission(Schema.sObjectType.ClusterJobResult__c.fields.ClusterJob__c);
-        return Database.getQueryLocator([SELECT Id FROM ClusterJobResult__c WHERE ClusterJob__c IN :this.jobIdsToDelete WITH SECURITY_ENFORCED]);
+        ClusterAccessCheck.checkFLSReadPermission(Schema.sObjectType.ClusterJobResult__b.fields.ClusterJob__c);
+        return Database.getQueryLocator([SELECT Id FROM ClusterJobResult__b WHERE ClusterJob__c IN :this.jobIdsToDelete WITH SECURITY_ENFORCED]);
     }
 
     public virtual Database.QueryLocator start(Database.BatchableContext bc) {
@@ -55,11 +55,12 @@ public with sharing class ClusterDeleteModelJobBatch implements Database.Batchab
         return query;
     }
 
-    public virtual void execute(Database.BatchableContext bc, List<ClusterJobResult__c> scope) {
+    public virtual void execute(Database.BatchableContext bc, List<ClusterJobResult__b> scope) {
         log.debug('Entering execute, deleting ' + scope.size() + ' records');
         try {
             //We check permissions in executeBatch, but let's check again here and below
-            if (Schema.sObjectType.ClusterJobResult__c.isAccessible() && Schema.sObjectType.ClusterJobResult__c.isDeletable()) {
+            if (Schema.sObjectType.ClusterJobResult__b.isAccessible() && Schema.sObjectType.ClusterJobResult__b.isDeletable()) {
+                ClusterJobManager.deleteNearestNeighborsFromResults(scope);
                 delete scope;
             }
         }

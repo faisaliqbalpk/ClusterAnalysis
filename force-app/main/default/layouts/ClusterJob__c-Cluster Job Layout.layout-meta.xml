@@ -158,17 +158,6 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>RelatedRecordLink__c</fields>
-        <fields>ClusterNumber__c</fields>
-        <fields>ClusterName__c</fields>
-        <relatedList>ClusterJobResult__c.ClusterJob__c</relatedList>
-        <sortField>ClusterNumber__c</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
         <fields>ClusterNumber__c</fields>
         <fields>ClusterName__c</fields>
         <relatedList>ClusterJobCluster__c.ClusterJob__c</relatedList>

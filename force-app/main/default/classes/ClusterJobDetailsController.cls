@@ -19,7 +19,7 @@ public with sharing class ClusterJobDetailsController {
         if (jobModel.status == ClusterConstants.JOBSTATUS_COMPLETED) {
             jobModel.numberOfRecords = 0;
             //isAccessible permission is checked in ClusterAccessCheck.checkReadPermission above, exception is thrown in case of no access
-            List<AggregateResult> arList = [SELECT Cluster__c clusterId, count(Id) recordCount FROM ClusterJobResult__c WHERE ClusterJob__c=:jobId GROUP BY Cluster__c];
+            List<AggregateResult> arList = [SELECT Cluster__c clusterId, count(Id) recordCount FROM ClusterJobResult__b WHERE ClusterJob__c=:jobId GROUP BY Cluster__c];
             Map<String, ClusterJobDetailsUiModel.ClusterJobCluster> clusters = new Map<String, ClusterJobDetailsUiModel.ClusterJobCluster>();
             for (ClusterJobDetailsUiModel.ClusterJobCluster cluster:jobModel.clusters) {
                 clusters.put(String.valueOf(cluster.clusterId), cluster);
@@ -48,11 +48,11 @@ public with sharing class ClusterJobDetailsController {
         else {
             count = maxCount;
         }
-        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__c);
+        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__b);
         List<ClusterDataPoint> dataPoints = new List<ClusterDataPoint>();
         //isAccessible permission is checked in ClusterAccessCheck.checkReadPermission above, exception is thrown in case of no access
-        for (ClusterJobResult__c record:[SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c 
-                FROM ClusterJobResult__c WHERE ClusterJob__c = :jobId WITH SECURITY_ENFORCED ORDER BY Random__c LIMIT :count OFFSET :offset]) {
+        for (ClusterJobResult__b record:[SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c
+                FROM ClusterJobResult__b WHERE ClusterJob__c = :jobId WITH SECURITY_ENFORCED ORDER BY Random__c LIMIT :count OFFSET :offset]) {
             ClusterDataPoint dp = new ClusterDataPoint(record);
             //We will parse json in javascript to save apex CPU time
             dp.valuesJson = ClusterDataHelper.getClusterJobResultValues(record);
@@ -98,11 +98,11 @@ public with sharing class ClusterJobDetailsController {
 
     @AuraEnabled
     public static ClusterResultDetailsUiModel getJobResultModel(Id jobResultId){
-        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__c);
-        List<ClusterJobResult__c> results = [SELECT Id, Name, Cluster__c, Cluster__r.ClusterName__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c 
-            FROM ClusterJobResult__c WHERE Id = :jobResultId WITH SECURITY_ENFORCED];
+        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__b);
+        List<ClusterJobResult__b> results = [SELECT Id, Name, Cluster__c, Cluster__r.ClusterName__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c
+            FROM ClusterJobResult__b WHERE Id = :jobResultId WITH SECURITY_ENFORCED];
         
-        ClusterJobResult__c result = results.get(0);
+        ClusterJobResult__b result = results.get(0);
         ClusterJob__c job = ClusterJobManager.getJob(result.ClusterJob__c);
         
         ClusterJobState jobState = new ClusterJobState();

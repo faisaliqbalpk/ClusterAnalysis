@@ -658,17 +658,17 @@ public with sharing class ClusterDataHelper {
     }
 
     public static ClusterDataPoint[] getRandomDataPoints(Integer count, ClusterJobState jobState) {
-        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__c);
+        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__b);
         //isAccessible permission is checked in ClusterAccessCheck.checkReadPermission, exception is thrown in case of no access
         Database.QueryLocator randomRecordLocator = Database.getQueryLocator([SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c 
-            FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id ORDER BY Random__c LIMIT :count]);
+            FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id ORDER BY Random__c LIMIT :count]);
         
         return getDataPoints(randomRecordLocator, jobState);
     }
 
     public static ClusterDataPoint[] getDataPoints(List<Id> dataPointIds, ClusterJobState jobState) {
         Database.QueryLocator resultLocator = Database.getQueryLocator([SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c 
-            FROM ClusterJobResult__c WHERE Id IN :dataPointIds WITH SECURITY_ENFORCED]);
+            FROM ClusterJobResult__b WHERE Id IN :dataPointIds WITH SECURITY_ENFORCED]);
         return ClusterDataHelper.getDataPoints(resultLocator, jobState);
     }
 
@@ -681,21 +681,21 @@ public with sharing class ClusterDataHelper {
         // Iterate over the records
         while (dpRecordIterator.hasNext())
         {
-            ClusterJobResult__c record = (ClusterJobResult__c)dpRecordIterator.next();
+            ClusterJobResult__b record = (ClusterJobResult__b)dpRecordIterator.next();
             ClusterDataPoint dp = objectProcessor.createDataPointFromResult(record);
             dataPoints.add(dp);
         }
         return dataPoints;
     }
 
-    public static ClusterDataPoint[] getDataPoints(ClusterJobResult__c[] jobResults, ClusterJobState jobState) {
+    public static ClusterDataPoint[] getDataPoints(ClusterJobResult__b[] jobResults, ClusterJobState jobState) {
         Integer index=0;
         List<ClusterDataPoint> dataPoints = new List<ClusterDataPoint>();
         ClusterObjectFactory objectFactory = new ClusterObjectFactory();
         ClusterSObjectProcessor objectProcessor = objectFactory.createSObjectProcessor(jobState, false); //No compression for javascript
  
         // Iterate over the records
-        for (ClusterJobResult__c record : jobResults)
+        for (ClusterJobResult__b record : jobResults)
         {
             ClusterDataPoint dp = objectProcessor.createDataPointFromResult(record);
             dataPoints.add(dp);
@@ -704,12 +704,12 @@ public with sharing class ClusterDataHelper {
     }
 
 
-    public static void populateClusterJobResultJsonValues(ClusterJobResult__c result, String json) {
+    public static void populateClusterJobResultJsonValues(ClusterJobResult__b result, String json) {
         Integer fieldSize = ClusterConstants.getMaxJsonFieldSize();
         populateClusterJobResultJsonValues(result, json, fieldSize);
     }
 
-    public static void populateClusterJobResultJsonValues(ClusterJobResult__c result, String json, Integer fieldSize) {
+    public static void populateClusterJobResultJsonValues(ClusterJobResult__b result, String json, Integer fieldSize) {
         clearClusterJobResultJsonValues(result);
         if (json != null && json.length() > fieldSize) {
             Integer startIndex = 0;
@@ -726,7 +726,7 @@ public with sharing class ClusterDataHelper {
         }
     }
 
-    public static void clearClusterJobResultJsonValues(ClusterJobResult__c result) {
+    public static void clearClusterJobResultJsonValues(ClusterJobResult__b result) {
         result.Json__c = null;
         result.Json2__c = null;
         result.Json3__c = null;
@@ -734,7 +734,7 @@ public with sharing class ClusterDataHelper {
         result.Json5__c = null;
     }
 
-    public static void populateClusterJobResultJsonValueBank(ClusterJobResult__c result, Integer fieldIndex, String json) {
+    public static void populateClusterJobResultJsonValueBank(ClusterJobResult__b result, Integer fieldIndex, String json) {
         //This looks lame but not sure how the namespace will be resolved if we use dynamic binding (via set)
         switch on fieldIndex {
             when 1 {
@@ -758,7 +758,7 @@ public with sharing class ClusterDataHelper {
         }
     }
 
-    public static String getClusterJobResultValues(ClusterJobResult__c jobResult) {
+    public static String getClusterJobResultValues(ClusterJobResult__b jobResult) {
         String result = jobResult.Json__c;
         if (!stringIsNullOrEmpty(result)) {
             //This looks lame but not sure how the namespace will be resolved if we use dynamic binding (via get)

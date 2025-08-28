@@ -98,7 +98,7 @@ public with sharing class ClusterKNNPredictor {
 
     public List<ClusterDataPointNeighbor> findNearestNeighbors(ClusterDataPoint dataPoint, Integer numNeighbors, Boolean insertDataPoint) {
         ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobNeighbor__c);
-        ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__c);
+        ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__b);
         ClusterKMeansJobState state = (ClusterKMeansJobState)this.runner.getJobState();
         Id jobId = state.clusterJob.Id;
         List<ClusterNeighbor> clusterNeighbors = this.runner.findNearestClusters(dataPoint, ClusterConstants.NUM_NEAREST_CLUSTERS);
@@ -134,10 +134,10 @@ public with sharing class ClusterKNNPredictor {
         }
         if (insertDataPoint && String.isNotBlank(dataPoint.externalId)) {
             //We will insert the source datapoint if specified so it can be found as a neighbor itself
-            List<ClusterJobResult__c> jobResults = [SELECT Id FROM ClusterJobResult__c WHERE ClusterJob__c = :state.clusterJob.Id AND RecordId__c = :dataPoint.externalId WITH SECURITY_ENFORCED LIMIT 1];
+            List<ClusterJobResult__b> jobResults = [SELECT Id FROM ClusterJobResult__b WHERE ClusterJob__c = :state.clusterJob.Id AND RecordId__c = :dataPoint.externalId WITH SECURITY_ENFORCED LIMIT 1];
             if (jobResults.size() == 0) {
                 log.debug('Inserting new data point with record id: ' + dataPoint.externalId);
-                ClusterJobResult__c jobResult = new ClusterJobResult__c();
+                ClusterJobResult__b jobResult = new ClusterJobResult__b();
                 jobResult.RecordId__c = dataPoint.externalId;
                 jobResult.RecordName__c = dataPoint.recordName;
                 jobResult.ClusterJob__c = state.clusterJob.Id;
@@ -241,7 +241,7 @@ public with sharing class ClusterKNNPredictor {
             ClusterJobResult__r.ClusterNumber__c, ClusterJobResult__r.DistanceToCluster__c, ClusterJobResult__r.DistanceToNNCluster__c, ClusterJobResult__r.Json__c, ClusterJobResult__r.Json2__c,
             ClusterJobResult__r.Json3__c, ClusterJobResult__r.Json4__c, ClusterJobResult__r.Json5__c, ClusterJobResult__r.Random__c, ClusterJobResult__r.RecordId__c, ClusterJobResult__r.RecordName__c
             FROM ClusterJobNeighbor__c WHERE RecordId__c = :String.valueOf(recordId) AND ClusterJob__c = :jobId WITH SECURITY_ENFORCED ORDER BY Distance__c];
-        ClusterJobResult__c[] jobResults = new ClusterJobResult__c[1];
+        ClusterJobResult__b[] jobResults = new ClusterJobResult__b[1];
         Set<String> neighborIds = new Set<String>();
         if (neighbors.size() > 0) {
             log.debug('Retrieved ' + neighbors.size() + ' previously calculated neighbors');
@@ -278,8 +278,8 @@ public with sharing class ClusterKNNPredictor {
 
     public ClusterDataPoint[] getRandomDataPoints(Integer count, Integer clusterIndex, Double distanceToCenter, Double distanceToNextCluster, ClusterJobState jobState) {
         log.debug('Retrieving nearest random data points in cluster ' + clusterIndex + ', distanceToCenter: ' + distanceToCenter + ', distanceToNextCluster: ' + distanceToNextCluster);
-        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__c);
-        List<ClusterJobResult__c> jobResults = null;
+        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__b);
+        List<ClusterJobResult__b> jobResults = null;
         if (distanceToCenter != null) {
             Double[] distanceTolerances = new Double[10];
             distanceTolerances[0] = 0.001;  //0.1%
@@ -300,7 +300,7 @@ public with sharing class ClusterKNNPredictor {
                 //We are trying to retrieve results with similar distanceToCenter value to reduce KNN calculations
                 //Here we are looking for an intersection of the current and nearest clusters
                 jobResults = [SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c 
-                    FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id AND ClusterNumber__c = :clusterIndex 
+                    FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id AND ClusterNumber__c = :clusterIndex
                     AND (DistanceToCluster__c >= :distanceMin AND DistanceToCluster__c<= :distanceMax AND DistanceToNNCluster__c<=:nextDistanceMax AND DistanceToNNCluster__c>=:nextDistanceMin) 
                     ORDER BY DistanceToCluster__c DESC LIMIT :count];
                 if (jobResults.size() >= this.knnNumber) {
@@ -313,7 +313,7 @@ public with sharing class ClusterKNNPredictor {
         //If we failed to get nearest results or if distanceToCenter is null
         if (distanceToCenter == null || jobResults == null || jobResults.size() == 0) {
             jobResults = [SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c 
-                FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id AND ClusterNumber__c = :clusterIndex ORDER BY Random__c LIMIT :count];
+                FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id AND ClusterNumber__c = :clusterIndex ORDER BY Random__c LIMIT :count];
         }
         log.debug('Retrieved ' + jobResults.size() + ' nearest random data points in cluster ' + clusterIndex);
         return ClusterDataHelper.getDataPoints(jobResults, jobState);
@@ -322,11 +322,11 @@ public with sharing class ClusterKNNPredictor {
     public ClusterDataPoint[] getRandomDataPoints(Integer count, Integer clusterIndex, Double distanceToCenter) {
         log.debug('Retrieving nearest random data points in cluster ' + clusterIndex + ' with radius ' + distanceToCenter);
         ClusterJobState jobState = this.runner.getJobState();
-        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__c);
-        List<ClusterJobResult__c> jobResults = null;
+        ClusterAccessCheck.checkReadPermission(Schema.SObjectType.ClusterJobResult__b);
+        List<ClusterJobResult__b> jobResults = null;
         //We are trying to retrieve results with similar distanceToCenter value to reduce KNN calculations
         jobResults = [SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c 
-            FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id AND ClusterNumber__c = :clusterIndex 
+            FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id AND ClusterNumber__c = :clusterIndex
             AND DistanceToCluster__c<= :distanceToCenter 
             ORDER BY DistanceToCluster__c DESC LIMIT :count];
         log.debug('Retrieved ' + jobResults.size() + ' nearest random data points in cluster ' + clusterIndex);

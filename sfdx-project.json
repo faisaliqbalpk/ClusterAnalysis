@@ -1,5 +1,5 @@
 {
-    "namespace": "clustan",
+    "namespace": "clustiq",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "51.0",
     "packageDirectories": [

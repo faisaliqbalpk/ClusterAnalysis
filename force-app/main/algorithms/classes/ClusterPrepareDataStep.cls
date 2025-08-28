@@ -1,5 +1,5 @@
 /*
- * Prepare data algorithm step - populates ClusterJobResult__c and finds min and max values for each field
+ * Prepare data algorithm step - populates ClusterJobResult__b and finds min and max values for each field
  *
  * @author: Iskander Mukhamedgaliyev
  */
@@ -32,7 +32,7 @@ public with sharing class ClusterPrepareDataStep extends ClusterBatchBase implem
         Integer length = model.fields.size();
         Object[] values = new Object[length];
         Integer scopeSize = scope.size();
-        ClusterJobResult__c[] results = new ClusterJobResult__c[scopeSize];
+        ClusterJobResult__b[] results = new ClusterJobResult__b[scopeSize];
         ClusterSObjectProcessor objectProcessor = this.runner.getSObjectProcessor();
 
         if (scopeSize > 0) {
@@ -46,9 +46,9 @@ public with sharing class ClusterPrepareDataStep extends ClusterBatchBase implem
         }
         for (Integer sindex = 0; sindex < scopeSize; sindex++){
             SObject record = scope[sindex];
-            ClusterJobResult__c result = new ClusterJobResult__c();
+            ClusterJobResult__b result = new ClusterJobResult__b();
             ClusterDataPoint dataPoint = objectProcessor.processSObject(record);
-            //Populating ClusterJobResult__c
+            //Populating ClusterJobResult__b
             result.RecordId__c = dataPoint.externalId;
             result.RecordName__c = dataPoint.recordName;            
             result.ClusterJob__c = jobState.clusterJob.Id;
@@ -57,7 +57,7 @@ public with sharing class ClusterPrepareDataStep extends ClusterBatchBase implem
             results[sindex] = result;
         }
         ClusterBatchBase.log.debug('Inserting result records');
-        //CRUD permissions on ClusterJobResult__c are checked in ClusterAccessCheck.checkCRUDPermission in ClusterAlgorithmRunner.start which is calling all ClusterAlgorithmStep implementors
+        //CRUD permissions on ClusterJobResult__b are checked in ClusterAccessCheck.checkCRUDPermission in ClusterAlgorithmRunner.start which is calling all ClusterAlgorithmStep implementors
         //exception is thrown there in case of no access
         //Checking the same in every processRecords is redundant
         insert results;

@@ -1,5 +1,5 @@
 /*
- * Centroid data assignment algorithm step - populates ClusterJobResult__c and finds min and max values for each field
+ * Centroid data assignment algorithm step - populates ClusterJobResult__b and finds min and max values for each field
  *
  * @author: Iskander Mukhamedgaliyev
  */
@@ -18,7 +18,7 @@ public with sharing class ClusterCentroidDataAssignmentStep extends ClusterBatch
         this.useSampleIds = useSampleIds;
         this.useDistanceToCluster = useDistanceToCluster;
         //Checking CRUD permissions
-        ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__c);
+        ClusterAccessCheck.checkCRUDPermission(Schema.SObjectType.ClusterJobResult__b);
     }
 
     public override void init(ClusterAlgorithmRunner runner) {
@@ -57,11 +57,11 @@ public with sharing class ClusterCentroidDataAssignmentStep extends ClusterBatch
         //CRUD permissions are checked in ClusterAccessCheck.checkCRUDPermission in the constructor above (for performance reasons), exception is thrown in case of no access
         if (this.useSampleIds && this.sampleResultsIds != null && this.sampleResultsIds.size() > 0) {
             return Database.getQueryLocator([SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c
-                FROM ClusterJobResult__c WHERE Id IN :sampleResultsIds]);
+                FROM ClusterJobResult__b WHERE Id IN :sampleResultsIds]);
         }
         else {
             return Database.getQueryLocator([SELECT Id, Cluster__c, Json__c, Json2__c, Json3__c, Json4__c, Json5__c, RecordId__c, RecordName__c, ClusterNumber__c, ClusterJob__c, DistanceToCluster__c, DistanceToNNCluster__c
-                FROM ClusterJobResult__c WHERE ClusterJob__c = :jobState.clusterJob.Id]);
+                FROM ClusterJobResult__b WHERE ClusterJob__c = :jobState.clusterJob.Id]);
         }
     }
 
@@ -75,10 +75,10 @@ public with sharing class ClusterCentroidDataAssignmentStep extends ClusterBatch
         Integer centroidSize = centroids.size();
         Object[] currentObject;
         ClusterSObjectProcessor objectProcessor = this.runner.getSObjectProcessor();
-        List<ClusterJobResult__c> updatedResults = new List<ClusterJobResult__c>();
+        List<ClusterJobResult__b> updatedResults = new List<ClusterJobResult__b>();
         Double[] centroidDistances = new Double[centroidSize];
         for (Integer sindex = 0; sindex < scopeSize; sindex++){
-            ClusterJobResult__c currentRecord = (ClusterJobResult__c)scope[sindex];
+            ClusterJobResult__b currentRecord = (ClusterJobResult__b)scope[sindex];
             ClusterDataPoint currentDataPoint = objectProcessor.createDataPointFromResult(currentRecord);
             //ClusterDataHelper.normalizeObject(currentObject, jobState);
             //Calculating min distance to centroids
@@ -133,8 +133,8 @@ public with sharing class ClusterCentroidDataAssignmentStep extends ClusterBatch
             }
         }
         if (this.updateResults) {
-            //CRUD permissions are checked in ClusterAccessCheck.checkCRUDPermission in the constructor above (for performance reasons), exception is thrown in case of no access
-            update updatedResults;
+            //TODO: BigObjects do not support update. This needs to be refactored to insert new records with a version number.
+            //update updatedResults;
         }
     }
 

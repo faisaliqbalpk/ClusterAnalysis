@@ -71,7 +71,7 @@
         <fields>NAME</fields>
         <fields>RelatedRecordLink__c</fields>
         <fields>ClusterNumber__c</fields>
-        <relatedList>ClusterJobResult__c.Cluster__c</relatedList>
+        <relatedList>ClusterJobResult__b.Cluster__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
