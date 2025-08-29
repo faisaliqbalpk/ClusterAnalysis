@@ -99,3 +99,35 @@ https://github.com/pozil/sfdc-ui-lookup-lwc
 
 ## Issues
 To report a bug or suggest an enhancement create an issue on "Issues" tab.
+
+## Deploying to a Salesforce Org
+
+This project uses the Salesforce DX source format and can be deployed to a scratch org or a standard Salesforce org (sandbox or production).
+
+### Prerequisites
+
+1.  **Salesforce CLI:** Ensure you have the [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli) installed and updated.
+2.  **Authenticated Org:** You must be authenticated to your target Salesforce org.
+
+### Deployment Steps
+
+1.  **Authenticate to your target org:**
+    Open your terminal and run the following command. This will open a browser window for you to log in. Replace `my-dev-org` with an alias of your choice.
+
+    ```bash
+    sfdx auth:web:login --setalias my-dev-org
+    ```
+
+2.  **Deploy the project source:**
+    Once authenticated, run the following command from the project's root directory to deploy the metadata:
+
+    ```bash
+    sfdx force:source:deploy --targetusername my-dev-org --sourcepath force-app
+    ```
+
+3.  **Assign Permission Sets:**
+    After the deployment is complete, you will need to assign the appropriate permission sets to your users to grant them access to the application.
+    *   **`ClusterPac_Admin`**: For users who need to create, configure, and manage clustering models and jobs.
+    *   **`ClusterPac_User`**: For users who need to run clustering jobs and view the results.
+
+    You can assign permission sets in Salesforce under **Setup > Users > Permission Sets**.
